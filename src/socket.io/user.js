@@ -370,6 +370,13 @@ SocketUser.setStatus = function(socket, status, callback) {
 	});
 };
 
+SocketUser.usernameIsAvailable = function(socket, data, callback) {
+	if (data && data.username) {
+		user.usernameIsAvailable(utils.slugify(data.username), callback);
+	}
+};
+
+
 /* Exports */
 
 module.exports = SocketUser;

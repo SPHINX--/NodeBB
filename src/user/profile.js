@@ -77,12 +77,12 @@ module.exports = function(User) {
 						return next(new Error('[[error:invalid-username]]'));
 					}
 
-					User.exists(userslug, function(err, exists) {
+					User.usernameIsAvailable(userslug, function(err, available) {
 						if(err) {
 							return next(err);
 						}
 
-						next(exists ? new Error('[[error:username-taken]]') : null);
+						next(available ? null : new Error('[[error:username-taken]]'));
 					});
 				});
 			}
@@ -112,7 +112,7 @@ module.exports = function(User) {
 				if (field === 'email') {
 					return updateEmail(uid, data.email, next);
 				} else if (field === 'username') {
-					return updateUsername(uid, data.username, next);
+					return next();  // updateUsername(uid, data.username, next);
 				} else if (field === 'signature') {
 					data[field] = S(data[field]).stripTags().s;
 				} else if (field === 'website') {

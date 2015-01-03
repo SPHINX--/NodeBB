@@ -135,14 +135,14 @@ define('forum/register', ['csrf'], function(csrf) {
 		} else if (!utils.isUserNameValid(username) || !utils.slugify(username)) {
 			showError(username_notify, '[[error:invalid-username]]');
 		} else {
-			socket.emit('user.exists', {
+			socket.emit('user.usernameIsAvailable', {
 				username: username
-			}, function(err, exists) {
+			}, function(err, available) {
 				if(err) {
 					return app.alertError(err.message);
 				}
 
-				if (exists) {
+				if (!available) {
 					showError(username_notify, '[[error:username-taken]]');
 				} else {
 					showSuccess(username_notify, successIcon);

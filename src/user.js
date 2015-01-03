@@ -4,6 +4,7 @@ var	async = require('async'),
 	nconf = require('nconf'),
 	gravatar = require('gravatar'),
 
+	hcNameCheck = require('../hc/hcnamecheck.js'),
 	plugins = require('./plugins'),
 	db = require('./database'),
 	meta = require('./meta'),
@@ -413,5 +414,13 @@ var	async = require('async'),
 		db.sortedSetRemove('uid:' + uid + ':ignored:cids', cid, callback);
 	};
 
+	User.usernameIsAvailable = function(userslug, callback) {
+		if( hcNameCheck.isReservedUName(userslug) ) {
+			callback(null, 0);
+		}
+		else User.getUidByUserslug(userslug, function(err, exists) {
+			callback(err, !exists);
+		});
+	};
 
 }(exports));
