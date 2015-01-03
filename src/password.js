@@ -1,6 +1,6 @@
 'use strict';
 
-var	hcPassword = require('../hc/hcpassword.js'),
+var	hcPassword = require('../hc/hcpassword.js');
 
 
 (function(module) {
