@@ -374,6 +374,7 @@ SocketUser.usernameIsAvailable = function(socket, data, callback) {
 	if (data && data.username) {
 		user.usernameIsAvailable(utils.slugify(data.username), callback);
 	}
+	else callback(null, 0);
 };
 
 
