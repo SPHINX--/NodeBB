@@ -187,23 +187,23 @@ module.exports = function(User) {
 			if (err || !exists) {
 				return callback(err);
 			}
-
-			var	newUsername = '';
-			async.forever(function(next) {
-				newUsername = userData.username + (Math.floor(Math.random() * 255) + 1);
-				User.exists(newUsername, function(err, exists) {
-					if (err) {
-						return callback(err);
-					}
-					if (!exists) {
-						next(newUsername);
-					} else {
-						next();
-					}
-				});
-			}, function(username) {
-				callback(null, username);
-			});
+			return next(exists ? new Error('[[error:username-taken]]') : null);
+			// var	newUsername = '';
+			// async.forever(function(next) {
+			// 	newUsername = userData.username + (Math.floor(Math.random() * 255) + 1);
+			// 	User.exists(newUsername, function(err, exists) {
+			// 		if (err) {
+			// 			return callback(err);
+			// 		}
+			// 		if (!exists) {
+			// 			next(newUsername);
+			// 		} else {
+			// 			next();
+			// 		}
+			// 	});
+			// }, function(username) {
+			// 	callback(null, username);
+			// });
 		});
 	}
 
